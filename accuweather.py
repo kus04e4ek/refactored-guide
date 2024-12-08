@@ -17,6 +17,19 @@ def get_location_key_by_lat_lon(lat, lon):
 
     return ret.json()['Key']
 
+# Получает ключ локации в AccuWeather API по названию города.
+def get_location_key_by_city_name(city_name):
+    ret = requests.get('http://dataservice.accuweather.com/locations/v1/cities/search', 
+                       params={
+                           'apikey': API_KEY,
+                           'q': city_name
+                       })
+    if ret.status_code != 200:
+        print(ret.status_code, ret.content)
+        return
+
+    return ret.json()[0]['Key']
+
 # Получает текущую погоду по ключу локации в AccuWeather API.
 def get_current_conditions_by_location_key(location_key):
     ret = requests.get(f'http://dataservice.accuweather.com/currentconditions/v1/{location_key}',

@@ -5,7 +5,7 @@ import accuweather
 class CityWeather:
     # Инициализирует класс.
     def __init__(self, temperature, humidity, wind_speed, rain_probability,
-                 lat=None, lon=None):
+                 lat=None, lon=None, city_name=None):
         self.temperature = temperature
         self.humidity = humidity
         self.wind_speed = wind_speed
@@ -13,6 +13,7 @@ class CityWeather:
         
         self.lat = lat
         self.lon = lon
+        self.city_name = city_name
     
     
     # Возвращает CityWeather с помощью ключа локации в AccuWeather API, kwargs передаются в конструктор CityWeather.
@@ -37,6 +38,14 @@ class CityWeather:
             return
         
         return CityWeather.get_by_location_key(location_key, lat=lat, lon=lon, **kwargs)
+    
+    # Возвращает CityWeather с помощью названия города, kwargs передаются в конструктор CityWeather.
+    def get_by_city_name(city_name, **kwargs):
+        location_key = accuweather.get_location_key_by_city_name(city_name)
+        if location_key is None:
+            return
+        
+        return CityWeather.get_by_location_key(location_key, city_name=city_name, **kwargs)
 
 
     # Возвращает True, если плохие погодные условия и False, если хорошие.
@@ -49,10 +58,11 @@ class CityWeather:
     
     # Преобразует класс в строку, также вызывается при print.
     def __str__(self):
+        header = ''
         if self.lat is not None and self.lon is not None:
-            header = f'Ширина: {self.lat}, долгота: {self.lon}\n'
-        else:
-            header = ''
+            header += f'Ширина: {self.lat}, долгота: {self.lon}\n'
+        if self.city_name is not None:
+            header += f'Название города: {self.city_name}\n'
             
         tail = 'Погода плохая\n' if self.check_bad_weather() else 'Погода хорошая\n'
         

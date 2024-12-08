@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Погода</title>
+</head>
+
+<body>
+
+<form method='post'>
+    <label>Начальная точка:</label>
+    <input type='text' id='start_city_name' name='start_city_name' value='{{ start.city_name }}' required><br><br>
+    <label>Конечная точка:</label>
+    <input type='text' id='end_city_name' name='end_city_name' value='{{ end.city_name }}' required><br><br>
+    <button type='submit'>Send</button>
+</form>
+
+<h1>Начальная точка: {{ start.city_name }}</h1>
+<p>Температура: {{ start.temperature }}</p>
+<p>Влажность: {{ start.humidity }}</p>
+<p>Скорость ветра: {{ start.wind_speed }}</p>
+<p>Вероятность дождя: {{ start.rain_probability }}</p>
+
+<h1>Конечная точка: {{ end.city_name }}</h1>
+<p>Температура: {{ end.temperature }}</p>
+<p>Влажность: {{ end.humidity }}</p>
+<p>Скорость ветра: {{ end.wind_speed }}</p>
+<p>Вероятность дождя: {{ end.rain_probability }}</p>
+
+<h1>{{ result }}</h1>
+
+</body>
+</html>
