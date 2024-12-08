@@ -20,8 +20,6 @@ class CityWeather:
     def get_by_location_key(location_key, **kwargs):
         current_conditions = accuweather.get_current_conditions_by_location_key(location_key)
         daily_forecast = accuweather.get_daily_forecast_by_location_key(location_key)
-        if (current_conditions is None) or (daily_forecast is None):
-            return
         
         return CityWeather(
             current_conditions[0]['Temperature']['Metric']['Value'],
@@ -34,17 +32,11 @@ class CityWeather:
     # Возвращает CityWeather с помощью широту и долготы, kwargs передаются в конструктор CityWeather.
     def get_by_lat_lon(lat, lon, **kwargs):
         location_key = accuweather.get_location_key_by_lat_lon(lat, lon)
-        if location_key is None:
-            return
-        
         return CityWeather.get_by_location_key(location_key, lat=lat, lon=lon, **kwargs)
     
     # Возвращает CityWeather с помощью названия города, kwargs передаются в конструктор CityWeather.
     def get_by_city_name(city_name, **kwargs):
         location_key = accuweather.get_location_key_by_city_name(city_name)
-        if location_key is None:
-            return
-        
         return CityWeather.get_by_location_key(location_key, city_name=city_name, **kwargs)
 
 

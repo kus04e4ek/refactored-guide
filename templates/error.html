@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Погода</title>
+</head>
+
+<body>
+
+<h1>{{ error }}</h1>
+
+<form method='post'>
+    <label>Начальная точка:</label>
+    <input type='text' id='start_city_name' name='start_city_name' value='{{ start_city_name }}' required><br><br>
+    <label>Конечная точка:</label>
+    <input type='text' id='end_city_name' name='end_city_name' value='{{ end_city_name }}' required><br><br>
+    <button type='submit'>Send</button>
+</form>
+
+</body>
+</html>
