@@ -37,6 +37,14 @@ class CityWeather:
             return
         
         return CityWeather.get_by_location_key(location_key, lat=lat, lon=lon, **kwargs)
+
+
+    # Возвращает True, если плохие погодные условия и False, если хорошие.
+    def check_bad_weather(self):
+        return self.temperature <= 0 or self.temperature >= 30 or \
+               self.humidity <= 50 or self.humidity >= 80 or \
+               self.wind_speed >= 50 or \
+               self.rain_probability >= 50
     
     
     # Преобразует класс в строку, также вызывается при print.
@@ -45,14 +53,25 @@ class CityWeather:
             header = f'Ширина: {self.lat}, долгота: {self.lon}\n'
         else:
             header = ''
+            
+        tail = 'Погода плохая\n' if self.check_bad_weather() else 'Погода хорошая\n'
         
         return header + \
                f'Температура: {self.temperature}\n' \
                f'Влажность: {self.humidity}\n' \
                f'Скорость ветра: {self.wind_speed}\n' \
-               f'Вероятность дождя: {self.rain_probability}\n'
+               f'Вероятность дождя: {self.rain_probability}\n' + \
+               tail
 
 
 if __name__ == '__main__':
     print(CityWeather.get_by_lat_lon(55.751244, 37.618423))
     print(CityWeather.get_by_lat_lon(52.2855, 104.2890))
+
+    print(CityWeather(10, 60, 4, 0).check_bad_weather())
+    print(CityWeather(-100, 60, 4, 0).check_bad_weather())
+    print(CityWeather(100, 60, 4, 0).check_bad_weather())
+    print(CityWeather(10, 0, 4, 0).check_bad_weather())
+    print(CityWeather(10, 100, 4, 0).check_bad_weather())
+    print(CityWeather(10, 60, 100, 0).check_bad_weather())
+    print(CityWeather(10, 60, 4, 80).check_bad_weather())
