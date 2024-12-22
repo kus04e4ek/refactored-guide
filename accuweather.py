@@ -55,12 +55,62 @@ def get_current_conditions_by_location_key(location_key):
     return ret.json()
 
 # Получает погоду на весь день по ключу локации в AccuWeather API.
-def get_daily_forecast_by_location_key(location_key):
+def get_1_day_forecast_by_location_key(location_key):
     ret = requests.get(f'http://dataservice.accuweather.com/forecasts/v1/daily/1day/{location_key}',
                        params={
                            'apikey': API_KEY,
-                           'details': 'true'
+                           'details': 'true',
+                           'metric': 'true'
                        })
     check_errors(ret)
 
     return ret.json()
+
+# Получает погоду на 5 дней по ключу локации в AccuWeather API.
+def get_5_day_forecast_by_location_key(location_key):
+    ret = requests.get(f'http://dataservice.accuweather.com/forecasts/v1/daily/5day/{location_key}',
+                       params={
+                           'apikey': API_KEY,
+                           'details': 'true',
+                           'metric': 'true'
+                       })
+    check_errors(ret)
+
+    return ret.json()
+
+# Получает погоду на 10 дней по ключу локации в AccuWeather API.
+def get_10_day_forecast_by_location_key(location_key):
+    ret = requests.get(f'http://dataservice.accuweather.com/forecasts/v1/daily/10day/{location_key}',
+                       params={
+                           'apikey': API_KEY,
+                           'details': 'true',
+                           'metric': 'true'
+                       })
+    check_errors(ret)
+
+    return ret.json()
+
+# Получает погоду на 15 дней по ключу локации в AccuWeather API.
+def get_15_day_forecast_by_location_key(location_key):
+    ret = requests.get(f'http://dataservice.accuweather.com/forecasts/v1/daily/15day/{location_key}',
+                       params={
+                           'apikey': API_KEY,
+                           'details': 'true',
+                           'metric': 'true'
+                       })
+    check_errors(ret)
+
+    return ret.json()
+    
+# Получает погоду на какое-то количество дней по ключу локации в AccuWeather API.
+def get_daily_forecast_by_location_key(location_key, days=1):
+    if days <= 1:
+        return get_1_day_forecast_by_location_key(location_key)
+    if days <= 5:
+        return get_5_day_forecast_by_location_key(location_key)
+    if days <= 10:
+        return get_10_day_forecast_by_location_key(location_key)
+    if days <= 15:
+        return get_15_day_forecast_by_location_key(location_key)
+
+    raise ValueError(f'Слишком большое количество дней {days}')
